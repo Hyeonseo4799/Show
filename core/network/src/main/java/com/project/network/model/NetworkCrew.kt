@@ -1,5 +1,7 @@
 package com.project.network.model
 
+import com.project.data.model.Crew
+
 data class NetworkCrew(
     val person: Person,
     val type: String
@@ -36,3 +38,13 @@ data class NetworkCrew(
         }
     }
 }
+
+fun NetworkCrew.toCrew() = Crew(
+    birthday = person.birthday,
+    country = person.country,
+    deathday = person.deathday,
+    gender = person.gender,
+    image = person.image,
+    link = person.links.self.href,
+    name = person.name
+)
