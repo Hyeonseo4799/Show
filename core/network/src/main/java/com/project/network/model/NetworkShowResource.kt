@@ -1,6 +1,6 @@
 package com.project.network.model
 
-import com.project.data.model.ShowResource
+import com.project.model.*
 
 data class NetworkShowResource(
     val score: Double,
@@ -37,11 +37,6 @@ data class NetworkShowResource(
             val tvrage: Int
         )
 
-        data class Image(
-            val medium: String,
-            val original: String
-        )
-
         data class Links(
             val nextepisode: Nextepisode,
             val previousepisode: Previousepisode,
@@ -60,26 +55,8 @@ data class NetworkShowResource(
             )
         }
 
-        data class Network(
-            val country: Country,
-            val id: Int,
-            val name: String,
-            val officialSite: String
-        ) {
-            data class Country(
-                val code: String,
-                val name: String,
-                val timezone: String
-            )
-        }
-
         data class Rating(
             val average: Double
-        )
-
-        data class Schedule(
-            val days: List<String>,
-            val time: String
         )
 
         data class WebChannel(
@@ -97,21 +74,3 @@ data class NetworkShowResource(
     }
 }
 
-fun NetworkShowResource.toShowResource() = ShowResource(
-    id = show.id,
-    name = show.name,
-    type = show.type,
-    language = show.language,
-    genres = show.genres,
-    status = show.status,
-    averageRuntime = show.averageRuntime,
-    runtime = show.runtime,
-    premiered = show.premiered,
-    ended = show.ended,
-    officialSite = show.officialSite,
-    schedule = show.schedule,
-    rating = show.rating.average,
-    network = show.network,
-    image = show.image,
-    summary = show.summary
-)

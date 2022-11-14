@@ -1,6 +1,6 @@
 package com.project.data.repository
 
-import com.project.data.model.*
+import com.project.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface TVMazeRepository {
