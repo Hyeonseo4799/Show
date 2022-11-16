@@ -7,16 +7,16 @@ data class NetworkCrew(
     val type: String
 ) {
     data class Person(
-        val birthday: String,
-        val country: Country,
-        val deathday: Any,
-        val gender: String,
+        val birthday: String?,
+        val country: Country?,
+        val deathday: Any?,
+        val gender: String?,
         val id: Int,
-        val image: Image,
-        val links: Links,
+        val image: Image?,
+        val links: Links?,
         val name: String,
-        val updated: Int,
-        val url: String
+        val updated: Int?,
+        val url: String?
     ) {
         data class Links(
             val self: Self
