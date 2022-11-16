@@ -4,8 +4,9 @@ import com.project.data.model.*
 import com.project.network.TVMazeDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class TVMazeRepositoryImpl(
+class TVMazeRepositoryImpl @Inject constructor(
     private val tvMazeDataSource: TVMazeDataSource
 ) : TVMazeRepository {
     override fun getShowResources(query: String): Flow<List<com.project.model.ShowResource>> = flow {
