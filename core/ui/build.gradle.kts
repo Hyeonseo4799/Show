@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.project.search"
+    namespace = "com.example.ui"
     compileSdk = 33
 
     defaultConfig {
-        minSdk = 23
+        minSdk = 21
         targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -38,13 +38,12 @@ android {
 
 dependencies {
 
-    implementation(project(":core:network"))
-    implementation(project(":core:data"))
-    implementation(project(":core:model"))
-    implementation(project(":core:common"))
-    implementation(project(":core:ui"))
-    implementation("androidx.navigation:navigation-runtime-ktx:2.5.3")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("com.google.android.material:material:1.7.0")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.4")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
 
     val composeVersion = rootProject.extra["compose_version"]
 
@@ -52,10 +51,4 @@ dependencies {
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
     implementation("androidx.compose.material3:material3:1.1.0-alpha02")
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("com.google.android.material:material:1.7.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.4")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
 }

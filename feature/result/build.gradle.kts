@@ -10,7 +10,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
         targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:model"))
     implementation(project(":core:common"))
+    implementation(project(":core:ui"))
 
     val composeVersion = "1.3.1"
 
@@ -70,6 +71,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
 
-    val coilVersion = "2.2.2"
-    implementation("io.coil-kt:coil-compose:$coilVersion")
+    val landscapistVersion = "1.4.7"
+    implementation("com.github.skydoves:landscapist-glide:$landscapistVersion")
+
 }
