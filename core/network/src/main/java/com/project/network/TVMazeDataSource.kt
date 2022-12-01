@@ -1,10 +1,13 @@
 package com.project.network
 
-import com.project.network.model.NetworkCrew
+import com.project.network.model.NetworkCast
+import com.project.network.model.NetworkShow
 import com.project.network.model.NetworkShowResource
 
 interface TVMazeDataSource {
-    suspend fun getShowResources(query: String): List<NetworkShowResource>
+    suspend fun getShows(query: String): List<NetworkShow>
 
-    suspend fun getCrews(id: Int): List<NetworkCrew>
+    suspend fun getCrews(id: Int): List<NetworkCast>
+
+    suspend fun getShowResources(id: Int): NetworkShowResource
 }

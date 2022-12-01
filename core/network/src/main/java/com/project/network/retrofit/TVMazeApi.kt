@@ -13,14 +13,19 @@ import javax.inject.Singleton
 
 interface TVMazeApi {
     @GET("/search/shows")
-    suspend fun getShowResources(
+    suspend fun getShows(
         @Query("q") query: String
-    ): List<NetworkShowResource>
+    ): List<NetworkShow>
 
-    @GET("/shows/{id}/crew")
+    @GET("/shows/{id}/cast")
     suspend fun getCrews(
         @Path("id") id: Int
-    ): List<NetworkCrew>
+    ): List<NetworkCast>
+
+    @GET("/shows/{id}")
+    suspend fun getShowResources(
+        @Path("id") id: Int
+    ): NetworkShowResource
 }
 
 @Singleton
@@ -31,9 +36,12 @@ class TVMaze @Inject constructor() : TVMazeDataSource {
         .build()
         .create(TVMazeApi::class.java)
 
-    override suspend fun getShowResources(query: String): List<NetworkShowResource> =
-        networkApi.getShowResources(query)
+    override suspend fun getShows(query: String): List<NetworkShow> =
+        networkApi.getShows(query)
 
-    override suspend fun getCrews(id: Int): List<NetworkCrew> =
+    override suspend fun getCrews(id: Int): List<NetworkCast> =
         networkApi.getCrews(id)
+
+    override suspend fun getShowResources(id: Int): NetworkShowResource =
+        networkApi.getShowResources(id)
 }
