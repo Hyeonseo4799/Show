@@ -1,0 +1,10 @@
+<resources>
+    <string name="language">언어</string>
+    <string name="status">상태</string>
+    <string name="cast">출연진</string>
+    <string name="official_site">공식 사이트</string>
+    <string name="schedule">방영일정</string>
+    <string name="runtime">방송시간</string>
+    <string name="broadcast_period">방영기간</string>
+    <string name="homepage">홈페이지로 이동하기</string>
+</resources>

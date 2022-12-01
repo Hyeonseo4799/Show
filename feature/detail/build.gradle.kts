@@ -10,7 +10,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
         targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -40,10 +40,17 @@ android {
 
 dependencies {
 
-    implementation(project(":core:model"))
+    implementation(project(":core:network"))
     implementation(project(":core:data"))
+    implementation(project(":core:model"))
     implementation(project(":core:common"))
 
+    val composeVersion = rootProject.extra["compose_version"]
+
+    implementation("androidx.activity:activity-compose:1.6.1")
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+    implementation("androidx.compose.material3:material3:1.1.0-alpha02")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("com.google.android.material:material:1.7.0")
@@ -53,17 +60,16 @@ dependencies {
 
     val hiltVersion = "2.44"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     val lifecycleVersion = "2.6.0-alpha03"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
 
-    val composeVersion = "1.3.1"
-    implementation("androidx.activity:activity-compose:$composeVersion")
-    implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-    implementation("androidx.compose.material3:material3:1.1.0-alpha01")
+    val landscapistVersion = "1.4.7"
+    implementation("com.github.skydoves:landscapist-glide:$landscapistVersion")
 
+    val accompanistVersion = "0.28.0"
+    implementation("com.google.accompanist:accompanist-flowlayout:$accompanistVersion")
 }
