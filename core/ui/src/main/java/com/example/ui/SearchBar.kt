@@ -18,8 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
@@ -46,8 +47,13 @@ fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .shadow(5.dp, RoundedCornerShape(20.dp))
-            .background(Color.White, RoundedCornerShape(20.dp))
+            .background(MaterialTheme.colorScheme.background, RoundedCornerShape(20.dp))
             .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(20.dp)),
+        textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
+        cursorBrush = Brush.verticalGradient(
+            0.00f to MaterialTheme.colorScheme.onBackground,
+            1.00f to MaterialTheme.colorScheme.onBackground
+        ),
         decorationBox = { innerTextField ->
             Row(
                 modifier = modifier
