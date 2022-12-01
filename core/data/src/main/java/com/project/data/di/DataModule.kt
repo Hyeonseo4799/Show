@@ -1,7 +1,6 @@
 package com.project.data.di
 
-import com.project.data.repository.TVMazeRepository
-import com.project.data.repository.TVMazeRepositoryImpl
+import com.project.data.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,7 +10,12 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface DataModule {
     @Binds
-    fun bindsTVMazeRepository(
-        tvMazeRepository: TVMazeRepositoryImpl
-    ): TVMazeRepository
+    fun bindsResultRepository(
+        tvMazeRepository: ResultRepositoryImpl
+    ): ResultRepository
+
+    @Binds
+    fun bindsDetailRepository(
+        detailRepository: DetailRepositoryImpl
+    ): DetailRepository
 }
