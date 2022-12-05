@@ -72,4 +72,7 @@ dependencies {
 
     val accompanistVersion = "0.28.0"
     implementation("com.google.accompanist:accompanist-flowlayout:$accompanistVersion")
+
+    val jsoupVersion = "1.15.3"
+    implementation("org.jsoup:jsoup:$jsoupVersion")
 }
