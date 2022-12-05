@@ -1,4 +1,5 @@
 <resources>
+    <string name="introduce">소개</string>
     <string name="language">언어</string>
     <string name="status">상태</string>
     <string name="cast">출연진</string>
@@ -7,4 +8,6 @@
     <string name="runtime">방송시간</string>
     <string name="broadcast_period">방영기간</string>
     <string name="homepage">홈페이지로 이동하기</string>
+    <string name="show_more">모두 보기</string>
+    <string name="show_less">최소화</string>
 </resources>
