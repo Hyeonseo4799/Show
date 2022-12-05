@@ -1,32 +1,31 @@
 package com.project.list
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
+import com.example.ui.SearchBar
+import com.skydoves.landscapist.ShimmerParams
+import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -39,78 +38,84 @@ fun ResultRoute(
     ResultScreen(navigateToDetail, title, resultUiState, viewModel)
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ResultScreen(
     navigateToDetail: (Int) -> Unit,
-    title: String,
+    text: String,
     resultUiState: ResultUiState,
-    viewModel: ResultViewModel
+    viewModel: ResultViewModel,
+    modifier: Modifier = Modifier
 ) {
-    var text by remember { mutableStateOf(title) }
-    val keyBoardController = LocalSoftwareKeyboardController.current
+    var title by rememberSaveable { mutableStateOf(text) }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
     ) {
-        Spacer(modifier = Modifier.height(64.dp))
-        BasicTextField(
-            value = text,
-            onValueChange = { text = it },
-            maxLines = 1,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-            keyboardActions = KeyboardActions(onSearch = {
-                keyBoardController?.hide()
-                viewModel.searchShow(text)
-            }),
-            modifier = Modifier
-                .fillMaxWidth()
-                .shadow(5.dp, RoundedCornerShape(20.dp))
-                .background(Color.White, RoundedCornerShape(20.dp))
-                .border(1.dp, Color(0xFFFF7A00), RoundedCornerShape(20.dp))
-                .padding(horizontal = 15.dp, vertical = 12.dp),
-        )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = modifier.height(64.dp))
+
+        SearchBar(text = title) {
+            title = it
+            viewModel.searchShow(it)
+        }
+
+        Spacer(modifier = modifier.height(20.dp))
+
         when (resultUiState) {
             is ResultUiState.Error -> {
                 Text(
                     text = resultUiState.message,
                     color = Color.Red,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = modifier.align(Alignment.CenterHorizontally)
                 )
             }
-            is ResultUiState.Loading -> {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-                }
-            }
             is ResultUiState.Success -> {
+                if (resultUiState.shows.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.none_result, title),
+                        modifier = modifier.align(Alignment.CenterHorizontally)
+                    )
+                }
+
+                val interactionSource = remember { MutableInteractionSource() }
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    verticalArrangement = Arrangement.spacedBy(60.dp),
-                    horizontalArrangement = Arrangement.spacedBy(60.dp)
+                    columns = GridCells.Adaptive(160.dp),
+                    verticalArrangement = Arrangement.spacedBy(40.dp),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     items(resultUiState.shows) { item ->
                         Column(
-                            modifier = Modifier.clickable { navigateToDetail(item.id) }
+                            modifier = Modifier
+                                .clickable(
+                                    interactionSource = interactionSource,
+                                    indication = null
+                                ) {
+                                    navigateToDetail(item.id)
+                                }
                         ) {
-                            AsyncImage(
-                                model = item.image?.medium ?: R.drawable.empty,
-                                contentDescription = null,
+                            GlideImage(
+                                imageModel = item.image?.medium,
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
+                                error = ImageBitmap.imageResource(R.drawable.empty),
+                                modifier = modifier
+                                    .size(width = 160.dp, height = 220.dp)
+                                    .clip(RoundedCornerShape(10.dp)),
+                                shimmerParams = ShimmerParams(
+                                    baseColor = MaterialTheme.colorScheme.background,
+                                    highlightColor = MaterialTheme.colorScheme.secondary
+                                ),
                             )
+                            Spacer(modifier = modifier.height(5.dp))
                             Text(
                                 text = item.name,
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                                modifier = modifier.align(Alignment.CenterHorizontally)
                             )
                         }
                     }
                 }
             }
+            is ResultUiState.Loading -> {}
         }
     }
 }
