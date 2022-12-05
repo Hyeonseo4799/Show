@@ -10,20 +10,21 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorScheme = darkColorScheme(
     primary = Orange,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    secondary = Gray,
+
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Orange,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    secondary = LightGray
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -58,10 +59,9 @@ fun ShowTheme(
 
     if (!view.isInEditMode) {
         SideEffect {
-            systemUiController.setSystemBarsColor(
-                color = Color.Transparent,
-                darkIcons = useDarkIcons
-            )
+            systemUiController.apply {
+                setSystemBarsColor(color = Color.Transparent, darkIcons = useDarkIcons)
+            }
         }
 
     }
